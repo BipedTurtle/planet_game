@@ -18,7 +18,7 @@ namespace CustomScripts.Entities
             rb.useGravity = false;
 
             //use custom gravity system
-            Planet.Instance.AddAttractee(this);
+            Planet.Instance.ExertGravity(this);
         }
     }
 }

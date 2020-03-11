@@ -36,14 +36,17 @@ namespace CustomScripts.Entities
 
             body.AddForce(gravitationalForce);
 
+            //the below code was causing the wobbling error, but why?
+            //var rotationAmount = Quaternion.FromToRotation(body.transform.up, gravityNormal);
+            //body.rotation = body.rotation * rotationAmount;
+
+            //below works
             var rotationAmount = Quaternion.FromToRotation(body.transform.up, gravityNormal);
-            var targetRotation = body.transform.rotation * rotationAmount;
-            var currentRotatino = body.transform.rotation;
-            var speed = 5f;
-            bodyAttracted.transform.rotation = Quaternion.Slerp(currentRotatino, targetRotation, Time.deltaTime * speed);
+            var targetRotation = rotationAmount * body.rotation;
+            body.rotation = targetRotation;
         }
 
-        public void AddAttractee(Attractee attractee) =>
+        public void ExertGravity(Attractee attractee) =>
             UpdateManager.Instance.GlobalFixedUpdate += delegate { this.Attract(attractee); };
     }
 }
