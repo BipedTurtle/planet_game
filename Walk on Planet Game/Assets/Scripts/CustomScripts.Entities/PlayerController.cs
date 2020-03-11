@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using CustomScripts.Managers;
+using CustomScripts.Utility;
 
 namespace CustomScripts.Entities
 {
@@ -34,7 +35,9 @@ namespace CustomScripts.Entities
                 return;
 
             var smooth = 300f;
-            transform.Rotate(0, horizontal * smooth * Time.deltaTime, 0, Space.Self);
+            var rotation = horizontal * smooth * Time.deltaTime;
+            transform.Rotate(0, rotation, 0, Space.Self);
+            CustomCamera.Instance.Rotate(rotation);
         }
 
         public void Move()
