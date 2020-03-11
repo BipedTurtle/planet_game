@@ -34,7 +34,7 @@ namespace CustomScripts.Entities
             if (horizontal == 0)
                 return;
 
-            var smooth = 300f;
+            var smooth = 200f;
             var rotation = horizontal * smooth * Time.fixedDeltaTime;
             transform.Rotate(0, rotation, 0, Space.Self);
             CustomCamera.Instance.Rotate(rotation);

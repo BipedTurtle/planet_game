@@ -36,7 +36,8 @@ namespace CustomScripts.Utility
         private void TrackPlayer()
         {
             var camera = this.main.transform;
-            camera.position = tracking.position + tracking.transform.up * this.offset;
+            var trackingNormal = (tracking.position - Planet.Instance.transform.position).normalized; 
+            camera.position = tracking.position + trackingNormal * this.offset;
 
             var lookDirection = tracking.position - transform.position;
             var rotationAmount = Quaternion.FromToRotation(camera.forward, lookDirection);
