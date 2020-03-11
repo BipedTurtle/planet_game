@@ -19,7 +19,7 @@ namespace CustomScripts.Entities
             this.rigidbody = GetComponent<Rigidbody>();
 
             UpdateManager.Instance.GlobalFixedUpdate += this.Move;
-            UpdateManager.Instance.GlobalUpdate += this.Rotate;
+            UpdateManager.Instance.GlobalFixedUpdate += this.Rotate;
         }
 
         private Vector3 GetMovement()
@@ -35,7 +35,7 @@ namespace CustomScripts.Entities
                 return;
 
             var smooth = 300f;
-            var rotation = horizontal * smooth * Time.deltaTime;
+            var rotation = horizontal * smooth * Time.fixedDeltaTime;
             transform.Rotate(0, rotation, 0, Space.Self);
             CustomCamera.Instance.Rotate(rotation);
         }
@@ -44,7 +44,7 @@ namespace CustomScripts.Entities
         {
             var localDir = this.GetMovement();
             var worldDir = transform.TransformDirection(localDir);
-            var targetPosition = rigidbody.position + worldDir * this.speed * Time.deltaTime;
+            var targetPosition = rigidbody.position + worldDir * this.speed * Time.fixedDeltaTime;
             this.rigidbody.MovePosition(targetPosition);
         }
     }

@@ -43,7 +43,9 @@ namespace CustomScripts.Entities
             //below works
             var rotationAmount = Quaternion.FromToRotation(body.transform.up, gravityNormal);
             var targetRotation = rotationAmount * body.rotation;
-            body.rotation = targetRotation;
+            var smooth = 8f;
+            body.rotation = Quaternion.Slerp(body.rotation, targetRotation, smooth * Time.fixedDeltaTime);
+            //body.rotation = targetRotation;
         }
 
         public void ExertGravity(Attractee attractee) =>

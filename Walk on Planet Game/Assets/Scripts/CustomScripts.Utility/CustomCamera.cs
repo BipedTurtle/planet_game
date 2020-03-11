@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using CustomScripts.Managers;
+using CustomScripts.Entities;
 
 namespace CustomScripts.Utility
 {
@@ -30,12 +31,12 @@ namespace CustomScripts.Utility
             UpdateManager.Instance.GlobalLateUpdate += this.TrackPlayer;
         }
 
-        [SerializeField] private float offset = 15f;
+        [SerializeField] private float offset = 25f;
         [SerializeField] private Transform tracking;
         private void TrackPlayer()
         {
             var camera = this.main.transform;
-            camera.position = tracking.position + tracking.up * this.offset;
+            camera.position = tracking.position + tracking.transform.up * this.offset;
 
             var lookDirection = tracking.position - transform.position;
             var rotationAmount = Quaternion.FromToRotation(camera.forward, lookDirection);
@@ -45,7 +46,7 @@ namespace CustomScripts.Utility
 
         public void Rotate(float rotation)
         {
-            this.main.transform.Rotate(0, 0, rotation, Space.Self);
+            this.main.transform.Rotate(0, 0, -rotation, Space.Self);
         }
     }
 }
