@@ -18,28 +18,31 @@ namespace CustomScripts.Entities
             this.rigidbody = GetComponent<Rigidbody>();
 
             UpdateManager.Instance.GlobalFixedUpdate += this.Move;
+            UpdateManager.Instance.GlobalUpdate += this.Rotate;
         }
 
         private Vector3 GetMovement()
         {
-            var horizontalMovement = Input.GetAxisRaw("Horizontal");
             var verticalMovement = Input.GetAxisRaw("Vertical");
-            return new Vector3(horizontalMovement, 0, verticalMovement);
+            return new Vector3(0, 0, verticalMovement);
         }
 
-        private void Rotate(Vector3 lookDir)
+        private void Rotate()
         {
-            //transform.rotation = Quaternion.LookRotation(lookDir);
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (horizontal == 0)
+                return;
+
+            var smooth = 300f;
+            transform.Rotate(0, horizontal * smooth * Time.deltaTime, 0, Space.Self);
         }
 
         public void Move()
         {
-            var localMovement = this.GetMovement();
-            var worldMovement = transform.TransformDirection(localMovement);
-            var targetPosition = rigidbody.position + worldMovement * this.speed * Time.deltaTime;
+            var localDir = this.GetMovement();
+            var worldDir = transform.TransformDirection(localDir);
+            var targetPosition = rigidbody.position + worldDir * this.speed * Time.deltaTime;
             this.rigidbody.MovePosition(targetPosition);
-
-            this.Rotate(localMovement);
         }
     }
 }
