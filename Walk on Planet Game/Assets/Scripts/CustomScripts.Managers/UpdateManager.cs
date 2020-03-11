@@ -20,7 +20,7 @@ namespace CustomScripts.Managers
         #endregion
 
         public event Action GlobalUpdate;
-        public event Action FixedGlboalUpdate;
+        public event Action GlobalFixedUpdate;
 
         private void Update()
         {
@@ -29,7 +29,7 @@ namespace CustomScripts.Managers
 
         private void FixedUpdate()
         {
-            this.FixedGlboalUpdate?.Invoke();
+            this.GlobalFixedUpdate?.Invoke();
         }
     }
 }
