@@ -34,9 +34,11 @@ namespace CustomScripts.Entities
             if (horizontal == 0)
                 return;
 
-            var smooth = 200f;
+            var smooth = 100f;
             var rotation = horizontal * smooth * Time.fixedDeltaTime;
-            transform.Rotate(0, rotation, 0, Space.Self);
+            var lookRotation = Quaternion.LookRotation(horizontal * transform.right, transform.up);
+            rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, lookRotation, smooth * Time.fixedDeltaTime);
+            //transform.Rotate(0, rotation, 0, Space.Self);
             CustomCamera.Instance.Rotate(rotation);
         }
 
