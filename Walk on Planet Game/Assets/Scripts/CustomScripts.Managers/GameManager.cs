@@ -9,6 +9,7 @@ namespace CustomScripts.Managers
 {
     public class GameManager : MonoBehaviour
     {
+        #region Singleton
         public static GameManager Instance { get; private set; }
 
         private void Awake()
@@ -20,5 +21,6 @@ namespace CustomScripts.Managers
 
             Instance = this;
         }
+        #endregion
     }
 }

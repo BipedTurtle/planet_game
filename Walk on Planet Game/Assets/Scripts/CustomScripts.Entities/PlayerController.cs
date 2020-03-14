@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using CustomScripts.Managers;
 using CustomScripts.Utility;
 
@@ -38,7 +33,6 @@ namespace CustomScripts.Entities
             var rotation = horizontal * smooth * Time.fixedDeltaTime;
             var lookRotation = Quaternion.LookRotation(horizontal * transform.right, transform.up);
             rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, lookRotation, smooth * Time.fixedDeltaTime);
-            //transform.Rotate(0, rotation, 0, Space.Self);
             CustomCamera.Instance.Rotate(rotation);
         }
 
