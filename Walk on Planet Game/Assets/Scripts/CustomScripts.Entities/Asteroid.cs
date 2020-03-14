@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using CustomScripts.Managers;
+using System.Collections;
 
 namespace CustomScripts.Entities
 {
@@ -18,14 +19,14 @@ namespace CustomScripts.Entities
             UpdateManager.Instance.GlobalFixedUpdate += this.Fall;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
-            Debug.Log("trigger");
-            if (other.GetComponent<Planet>())
-                StopFalling();
+            var toCenterSqrdDistance = Vector3.SqrMagnitude((Planet.Instance.Position - transform.position));
+            var isWithinStoppingDistance = toCenterSqrdDistance <= Mathf.Pow(Planet.Instance.Radius, 2);
+            var hitPlanet = other.GetComponent<Planet>();
 
-            void StopFalling() => 
-                UpdateManager.Instance.GlobalFixedUpdate -= this.Fall;
+            if (hitPlanet && isWithinStoppingDistance)
+                StartCoroutine(this.Decompose());
         }
 
         private Vector3 GetDirection()
@@ -40,5 +41,16 @@ namespace CustomScripts.Entities
         {
             transform.position += this.movement * this.fallingSpeed * Time.fixedDeltaTime;
         }
+
+        [SerializeField] private float decomposeAfter = 5f;
+        private IEnumerator Decompose()
+        {
+            this.StopFalling();
+            yield return new WaitForSeconds(this.decomposeAfter);
+            Destroy(gameObject);
+        }
+
+        private void StopFalling() => UpdateManager.Instance.GlobalFixedUpdate -= this.Fall;
+
     }
 }

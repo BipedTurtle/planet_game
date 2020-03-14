@@ -24,6 +24,8 @@ namespace CustomScripts.Entities
         }
         #endregion
 
+        public Vector3 Position { get => transform.position; }
+        public float Radius { get => transform.localScale.x / 2; }
         private readonly float gravity = -10f;
 
         public void Attract(Attractee bodyAttracted)
